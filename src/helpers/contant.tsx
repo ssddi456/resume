@@ -134,6 +134,14 @@ export const CONTENT_OF_MODULE = ({ intl }) => {
       },
       {
         type: 'input',
+        attributeId: 'wx',
+        displayName: intl.formatMessage({ id: '微信' }),
+        formItemProps: {
+          rules: [{ required: true, message: 'Please input your WeChat!' }],
+        },
+      },
+      {
+        type: 'input',
         attributeId: 'email',
         displayName: intl.formatMessage({ id: '邮箱' }),
         formItemProps: {

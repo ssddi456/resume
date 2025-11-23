@@ -11,6 +11,7 @@ import {
   EnvironmentFilled,
   HeartFilled,
   CrownFilled,
+  WechatFilled,
 } from '@ant-design/icons';
 import _ from 'lodash-es';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -98,6 +99,12 @@ export const Template3: React.FC<Props> = props => {
               <div className="mobile">
                 <PhoneFilled style={{ color: theme.color, opacity: 0.85 }} />
                 {profile.mobile}
+              </div>
+            )}
+            {profile?.wx && (
+              <div className="mobile">
+                <WechatFilled style={{ color: theme.color, opacity: 0.85 }} />
+                {profile.wx}
               </div>
             )}
             {profile?.email && (

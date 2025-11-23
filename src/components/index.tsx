@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { Button, Affix, Upload, Spin, message, Alert, Modal } from 'antd';
 import type { RcFile } from 'antd/lib/upload';
-import _ from 'lodash-es';
+import _, { initial } from 'lodash-es';
 import qs from 'query-string';
 import jsonUrl from 'json-url';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -26,7 +26,7 @@ const codec = jsonUrl('lzma');
 export const Page: React.FC = () => {
   const lang = getLanguage();
   const intl = useIntl();
-  const user = getSearchObj().user || 'visiky';
+  const user = getSearchObj().user;
 
   const [, mode, changeMode] = useModeSwitcher({});
 
@@ -112,23 +112,17 @@ export const Page: React.FC = () => {
           });
         });
     } else {
-      if (query.data) {
-        codec.decompress(query.data).then(data => {
-          store(JSON.parse(data));
-        });
-      } else {
-        getConfig(lang, branch, user).then(data => {
-          store(data);
-        });
-      }
+      getConfig(lang, branch, user).then(data => {
+        store(data);
+      });
     }
-  }, [lang, query.user, query.branch, query.data]);
+  }, [lang, query.user, query.branch]);
 
   const onConfigChange = useCallback(
     (v: Partial<ResumeConfig>) => {
       const newC = _.assign({}, config, v);
       changeConfig(newC);
-      saveToLocalStorage(query.user as string, newC);
+      saveToLocalStorage(query.user as string, newC, intl);
     },
     [config, lang]
   );
@@ -154,8 +148,19 @@ export const Page: React.FC = () => {
     const targetNode = document.querySelector('.resume-content');
     if (!targetNode) return;
 
+    const updateBox = () => {
+      const rect = targetNode.getBoundingClientRect();
+      if (
+        rect.width !== box.width ||
+        rect.height !== box.height ||
+        rect.left !== box.left
+      ) {
+        setBox(rect);
+      }
+    };
+
     const observer = new MutationObserver(() => {
-      setBox(targetNode.getBoundingClientRect());
+      updateBox();
     });
     observer.observe(targetNode, {
       childList: true,
@@ -165,7 +170,7 @@ export const Page: React.FC = () => {
 
     // 再加一个定时器，监控下变化
     const interval = setInterval(() => {
-      setBox(targetNode.getBoundingClientRect());
+      updateBox();
     }, 1000);
 
     return () => {
@@ -233,42 +238,6 @@ export const Page: React.FC = () => {
   return (
     <React.Fragment>
       <Spin spinning={loading}>
-        {mode === 'edit' && (
-          <Alert
-            showIcon={false}
-            message={
-              <span>
-                {intl.formatMessage({
-                  id: `编辑之后，请及时存储个人信息到个人仓库中。`,
-                })}
-                <span>
-                  <span style={{ marginRight: '4px' }}>
-                    👉 {!query.user && intl.formatMessage({ id: '参考：' })}
-                  </span>
-                  <span
-                    style={{
-                      color: `var(--primary-color, #1890ff)`,
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => {
-                      const user = query.user || 'visiky';
-                      window.open(`https://github.com/${user}/${user}`);
-                    }}
-                  >
-                    {`${query.user || 'visiky'}'s resumeInfo`}
-                  </span>
-                  <span>
-                    {`（https://github.com/${query.user || 'visiky'}/${
-                      query.user || 'visiky'
-                    }/blob/${query.branch || 'master'}/resume.json）`}
-                  </span>
-                </span>
-              </span>
-            }
-            banner
-            closable
-          />
-        )}
         <div className="page">
           {config && (
             <Resume

@@ -1,4 +1,4 @@
-import { useIntl } from 'react-intl';
+import { IntlShape, useIntl } from 'react-intl';
 import { message } from 'antd';
 import type { ResumeConfig } from '@/components/types';
 import { customAssign } from '@/helpers/customAssign';
@@ -36,9 +36,7 @@ export async function getConfig(
 }
 
 export const saveToLocalStorage = _.throttle(
-  (user: string, config: ResumeConfig) => {
-    const intl = useIntl();
-
+  (user: string, config: ResumeConfig, intl: IntlShape) => {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(LOCAL_KEY(user), JSON.stringify(config));
       message.success(intl.formatMessage({ id: '已缓存在本地' }), 0.65);

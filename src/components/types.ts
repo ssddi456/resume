@@ -12,6 +12,7 @@ export type ResumeConfig = {
   profile?: {
     name: string;
     mobile?: string;
+    wx?: string;
     email?: string;
     github?: string;
     zhihu?: string;
