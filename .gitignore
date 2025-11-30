@@ -14,9 +14,6 @@ node_modules
 
 .DS_Store
 
-# vscode editor
-.vscode
-
 # webstorm editor
 .idea
 

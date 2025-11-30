@@ -7,8 +7,15 @@ import {
   Radio,
   Popover,
   Input,
+  Upload,
+  Dropdown,
+  Menu,
 } from 'antd';
-import { DeleteFilled, InfoCircleFilled } from '@ant-design/icons';
+import {
+  DeleteFilled,
+  InfoCircleFilled,
+  DownOutlined,
+} from '@ant-design/icons';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import _ from 'lodash-es';
@@ -32,7 +39,10 @@ type Props = {
   onThemeChange: (v: Partial<ThemeConfig>) => void;
   template: string;
   onTemplateChange: (v: string) => void;
-
+  copyConfig: () => void;
+  exportConfig: () => void;
+  importConfig: (file: any) => boolean;
+  handleSharing: () => void;
   style?: object;
 };
 
@@ -87,6 +97,7 @@ export const Drawer: React.FC<Props> = props => {
   const [visible, setVisible] = useState(false);
   const [childrenDrawer, setChildrenDrawer] = useState(null);
   const [currentContent, updateCurrentContent] = useState(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   /**
    * 1. 更新currentContent State
@@ -295,41 +306,76 @@ export const Drawer: React.FC<Props> = props => {
   // #endregion
 
   return (
-    <>
-      <Button
-        type="primary"
-        onClick={() => setVisible(true)}
-        style={props.style}
-      >
-        <FormattedMessage id="进行配置" />
-        <Popover
-          content={
-            <FormattedMessage id="移动端模式下，只支持预览，不支持配置" />
-          }
+    <div className="drawer-container">
+      <div className="drawer-header">
+        <Radio.Group value={type} onChange={e => setType(e.target.value)}>
+          <Radio.Button value="template">
+            <FormattedMessage id="选择模板" />
+          </Radio.Button>
+          <Radio.Button value="module">
+            <FormattedMessage id="配置简历" />
+          </Radio.Button>
+        </Radio.Group>
+
+        <Dropdown
+          menu={{
+            items: [
+              {
+                key: 'copy',
+                label: <FormattedMessage id="复制配置" />,
+                onClick: props.copyConfig,
+              },
+              {
+                key: 'export',
+                label: <FormattedMessage id="保存简历" />,
+                onClick: props.exportConfig,
+              },
+              {
+                key: 'import',
+                label: <FormattedMessage id="导入配置" />,
+                onClick: () => {
+                  // 触发文件上传
+                  fileInputRef.current?.click();
+                },
+              },
+              {
+                key: 'print',
+                label: <FormattedMessage id="下载 PDF" />,
+                onClick: () => window.print(),
+              },
+              {
+                key: 'share',
+                label: <FormattedMessage id="分享" />,
+                onClick: props.handleSharing,
+              },
+            ],
+          }}
         >
-          <InfoCircleFilled style={{ marginLeft: '4px' }} />
-        </Popover>
-      </Button>
-      <AntdDrawer
-        title={
-          <Radio.Group value={type} onChange={e => setType(e.target.value)}>
-            <Radio.Button value="template">
-              <FormattedMessage id="选择模板" />
-            </Radio.Button>
-            <Radio.Button value="module">
-              <FormattedMessage id="配置简历" />
-            </Radio.Button>
-          </Radio.Group>
-        }
-        width={480}
-        closable={false}
-        onClose={() => setVisible(false)}
-        visible={visible}
-      >
+          <Button type="primary">
+            <FormattedMessage id="更多操作" />
+            <DownOutlined />
+          </Button>
+        </Dropdown>
+
+        <Upload
+          accept=".json"
+          showUploadList={false}
+          beforeUpload={props.importConfig}
+          className="drawer-upload-hidden"
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            className="drawer-upload-input"
+            style={{ display: 'none' }}
+          />
+        </Upload>
+      </div>
+
+      <div className="drawer-content">
         {type === 'module' ? (
           moduleContent
         ) : (
-          // type === 'theme'
           <>
             <ConfigTheme
               {...props.theme}
@@ -341,7 +387,41 @@ export const Drawer: React.FC<Props> = props => {
             />
           </>
         )}
+      </div>
+
+      <AntdDrawer
+        title={modules.find(m => m.key === childrenDrawer)?.name}
+        width={450}
+        onClose={() => setChildrenDrawer(null)}
+        open={!!childrenDrawer}
+      >
+        <FormCreator
+          config={contentOfModule[childrenDrawer]}
+          value={currentContent}
+          isList={isList}
+          onChange={v => {
+            if (isList) {
+              const newValue = _.get(props.value, childrenDrawer, []);
+              if (currentContent) {
+                newValue[currentContent.dataIndex] = _.merge(
+                  {},
+                  currentContent,
+                  v
+                );
+              } else {
+                newValue.push(v);
+              }
+              props.onValueChange({
+                [childrenDrawer]: newValue,
+              });
+              setChildrenDrawer(null);
+              updateCurrentContent(null);
+            } else {
+              updateContent(v);
+            }
+          }}
+        />
       </AntdDrawer>
-    </>
+    </div>
   );
 };

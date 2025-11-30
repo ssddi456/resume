@@ -1,0 +1,164 @@
+{
+    "titleNameMap": {
+        "educationList": "教育背景",
+        "workExpList": "工作经历",
+        "projectList": "项目经历",
+        "skillList": "个人技能",
+        "awardList": "更多信息",
+        "workList": "个人作品",
+        "aboutme": "自我介绍"
+    },
+    "avatar": {
+        "hidden": false
+    },
+    "profile": {
+        "name": "李海波",
+        "email": "torrent88410@gmail.com",
+        "mobile": "15208260749",
+        "github": "https://github.com/ssddi456",
+        "zhihu": "",
+        "workExpYear": ">十年",
+        "workPlace": "北京",
+        "positionTitle": "后端研发工程师",
+        "wx": "18600950615"
+    },
+    "educationList": [
+        {
+            "edu_time": [
+                "2006.09",
+                "2010.06"
+            ],
+            "school": "四川大学",
+            "major": "工业设计",
+            "academic_degree": "本科",
+            "dataIndex": 0
+        }
+    ],
+    "awardList": [],
+    "workExpList": [
+        {
+            "company_name": "贝壳集团",
+            "department_name": "智能创新事物线",
+            "work_time": [
+                "2020.07.23",
+                " "
+            ],
+            "work_desc": "负责贝壳新房b端业务的基础能力建设及重点项目研发。",
+            "dataIndex": 0
+        },
+        {
+            "company_name": "度小满金融（原百度金融)",
+            "department_name": "",
+            "work_time": [
+                "2018.06",
+                " 2020.06"
+            ],
+            "work_desc": "负责前端及客户端相关的基础架构工作，及关键项目的研发及保驾护航",
+            "dataIndex": 1
+        },
+        {
+            "company_name": "百度(百度钱包)",
+            "department_name": "",
+            "work_time": [
+                "2013.04",
+                "2018.06"
+            ],
+            "work_desc": "负责前端及客户端相关的基础架构工作，及关键项目的研发及保驾护航",
+            "dataIndex": 2
+        },
+        {
+            "work_time": [
+                "2012.02",
+                "2013.04"
+            ],
+            "company_name": "成都四方信息技术有限公司",
+            "department_name": "",
+            "work_desc": "负责一款电信增值服务系统的后端界面及用户界面的研发工作。"
+        },
+        {
+            "work_time": [
+                "2010.06",
+                "2011.06"
+            ],
+            "company_name": "成都四方信息技术有限公司",
+            "department_name": "",
+            "work_desc": "负责车辆零件及整车的 3d 建模及材质设置。",
+            "dataIndex": 4
+        }
+    ],
+    "skillList": [
+        {
+            "skill_name": "全栈工程师",
+            "skill_desc": "全栈工程师:python /golang /hivesql/mysql/redis",
+            "skill_level": 60,
+            "dataIndex": 3
+        },
+        {
+            "skill_name": "全栈工程师",
+            "skill_desc": "全栈工程师: Nodejs",
+            "skill_level": 90,
+            "dataIndex": 2
+        },
+        {
+            "skill_name": "大模型应用开发",
+            "skill_level": 80,
+            "skill_desc": "大模型应用开发:rag, workflow, chatbot"
+        },
+        {
+            "skill_name": "资深前端研发",
+            "skill_desc": "资深前端研发，丰富的c端、b端复杂业务经验(React / Vue)",
+            "skill_level": 95,
+            "dataIndex": 0
+        }
+    ],
+    "projectList": [
+        {
+            "project_name": "新业主项目",
+            "project_role": "全栈研发",
+            "project_time": "2025.06~至今",
+            "project_desc": "新业主项目 是贝壳在房地产市场转向买方市场的过程中，“为业主好“，帮助业主更好的认识市场，生产营销素材，与经纪人充分协作，提升售房效率。",
+            "project_content": "在项目中作为核心开发者，主要负责后端核心模块研发。\n1. 构建高并发服务。\n2. 编写复杂的 `HiveSQL` 进行离线数据预计算，构建核心数据模型与指标。\n3. 使用 Redis 缓存查询结果，优化并发性能。\n4. 开发chatbot，基于sse协议，支持断开重连，支持通过配置接入mcp。",
+            "dataIndex": 0
+        },
+        {
+            "project_name": "贝智审",
+            "project_role": "前端负责人,全栈研发",
+            "project_time": "2024.01-2025.06",
+            "project_desc": "面向贝壳新房作业流程中，关于合同签署、合同规则翻录与规则配置，涉及的各个环节，探索采用大模型技术，将差异化极大的合同内容，标准化，实现全流程效率的提升。",
+            "project_content": "大模型技术调研与落地\n1. 核心功能研发：合同文件预处理： 从docx提取规范文本 并按标题级别切块，基于embedding进行分片分类，使用大模型提取结构化数据，面向合同审核的前端交互设计与研发\n2. 产品效果与用户体验打磨，提升职能、管理、运营等各角色的作业效率\n3. 合同条款文本提取准确率95% 合同条款文本结构化准确率90%，用户满意度4.5+",
+            "dataIndex": 1
+        },
+        {
+            "project_time": "2025.01~至今",
+            "project_name": "llm时代研发方式的转向",
+            "project_role": "核心开发者",
+            "project_desc": "llm时代来临，改进研发流程，如何利用好新工具提升研发效能，提升产出能力，是新时代研发团队的核心问题。",
+            "project_content": "1. 探索研发全流程中各环节需要的prompt设计标准，提升llm一次性生成效果\n2. 探索研发全流程中，llm需要的新时代的基础设施mcp应该包含哪些功能\n3. 产出项目cursorrule规范，技术设计中的prompt规范、前端团队mcp server，并在团队中推广，促进团队研发模式转向",
+            "dataIndex": 2
+        },
+        {
+            "project_time": "2019 - 2020",
+            "project_name": "app 离线缓存项目",
+            "project_role": "前端负责人，全栈研发",
+            "project_desc": "度小满金融app中核心流程大量使用h5页面开发，部分核心流程业务复杂，资源多，加载等待时间长，体验差",
+            "project_content": "1. 与客户端沟通协作设计技术方案，设计整个资源下发加载方案。\n2. 对接cicd系统，开发资源包管理后台及资源包配置接口。\n3. 效果：使用 nodejs 研发了服务端资源包发布，版本管理的功能，应用此技术后，页面的首屏时间可缩短至 500ms，首次可交互时间则受具体业务而定，但仍有明显提升。",
+            "dataIndex": 3
+        },
+        {
+            "project_name": "通用落地页项目",
+            "project_role": "前端负责人",
+            "project_time": "2018 - 2019",
+            "project_desc": "度小满金融核心获客落地页，整个线上信贷转化的第一步",
+            "project_content": "1. 与后端、产品、运营沟通协作设计技术方案，\n2. 分析调试落地页各场景中核心性能影响点，优化展示性能。\n3. 效果：运营可自主快速配置落地页方案上线，验证运营方案提升转化效果；大幅提升前端性能，首次可交互时间 tp90 缩短至 2500ms 以内，首屏时间缩短至一秒以内",
+            "dataIndex": 2
+        }
+    ],
+    "workList": [],
+    "aboutme": {
+        "aboutme_desc": "自驱型工程师，十年大型复杂产品开发经验，积极拥抱新技术，探索能力边界。"
+    },
+    "theme": {
+        "color": "#2f5785",
+        "tagColor": "#8bc34a"
+    }
+}

@@ -27,6 +27,31 @@ body {
     padding: 12px;
     justify-content: center;
 
+    .page-container {
+      display: flex;
+      width: 100%;
+      gap: 12px;
+      
+      .page-left {
+        flex: 0 0 66.666%;
+        max-width: 66.666%;
+        overflow-y: auto;
+        max-height: calc(100vh - 24px);
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+      }
+      
+      .page-right {
+        flex: 0 0 33.333%;
+        max-width: 33.333%;
+        overflow: auto;
+        max-height: calc(100vh - 24px);
+      }
+    }
+
     .btn-group {
       margin-left: 12px;
       display: block;
@@ -41,9 +66,43 @@ body {
     }
   }
 
+  @media (max-width: 1200px) {
+    .page {
+      .page-container {
+        flex-direction: column;
+        
+        .page-left {
+          flex: 1;
+          max-width: 100%;
+          max-height: calc(50vh - 12px);
+        }
+        
+        .page-right {
+          flex: 1;
+          max-width: 100%;
+          max-height: calc(50vh - 12px);
+        }
+      }
+    }
+  }
+
   @media (max-width: 768px) {
     .page {
       flex-direction: column-reverse;
+
+      .page-container {
+        flex-direction: column-reverse;
+        
+        .page-left {
+          max-height: none;
+          max-width: 100%;
+        }
+        
+        .page-right {
+          max-height: none;
+          max-width: 100%;
+        }
+      }
 
       .btn-group {
         margin-left: 0px;
@@ -118,7 +177,8 @@ body {
 
   .resume-alert,
   .btn-group,
-  .box-size-info {
+  .box-size-info,
+  .page-right {
     display: none !important;
   }
 }

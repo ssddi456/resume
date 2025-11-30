@@ -146,10 +146,10 @@ export const Page: React.FC = () => {
 
   useEffect(() => {
     const targetNode = document.querySelector('.resume-content');
-    if (!targetNode) return;
-
     const updateBox = () => {
-      const rect = targetNode.getBoundingClientRect();
+      const rect = document
+        .querySelector('.resume-content')
+        .getBoundingClientRect();
       if (
         rect.width !== box.width ||
         rect.height !== box.height ||
@@ -158,6 +158,16 @@ export const Page: React.FC = () => {
         setBox(rect);
       }
     };
+    // 再加一个定时器，监控下变化
+    const interval = setInterval(() => {
+      updateBox();
+    }, 1000);
+
+    if (!targetNode) {
+      return () => {
+        clearInterval(interval);
+      };
+    }
 
     const observer = new MutationObserver(() => {
       updateBox();
@@ -168,16 +178,11 @@ export const Page: React.FC = () => {
       attributes: true,
     });
 
-    // 再加一个定时器，监控下变化
-    const interval = setInterval(() => {
-      updateBox();
-    }, 1000);
-
     return () => {
       observer.disconnect();
       clearInterval(interval);
     };
-  }, []);
+  }, [box]);
 
   const importConfig = (file: RcFile) => {
     if (window.FileReader) {
@@ -239,49 +244,29 @@ export const Page: React.FC = () => {
     <React.Fragment>
       <Spin spinning={loading}>
         <div className="page">
-          {config && (
-            <Resume
-              value={config}
-              theme={theme}
-              template={query.template || 'template1'}
-            />
-          )}
-          {mode === 'edit' && (
-            <React.Fragment>
-              <Affix offsetTop={0}>
-                <Button.Group className="btn-group">
-                  <Drawer
-                    value={config}
-                    onValueChange={onConfigChange}
-                    theme={theme}
-                    onThemeChange={onThemeChange}
-                    // @ts-ignore
-                    template={query.template || 'template1'}
-                    onTemplateChange={updateTemplate}
-                  />
-                  <Button type="primary" onClick={copyConfig}>
-                    <FormattedMessage id="复制配置" />
-                  </Button>
-                  <Button type="primary" onClick={exportConfig}>
-                    <FormattedMessage id="保存简历" />
-                  </Button>
-                  <Upload
-                    accept=".json"
-                    showUploadList={false}
-                    beforeUpload={importConfig}
-                  >
-                    <Button className="btn-upload">
-                      <FormattedMessage id="导入配置" />
-                    </Button>
-                  </Upload>
-                  <Button type="primary" onClick={() => window.print()}>
-                    <FormattedMessage id="下载 PDF" />
-                  </Button>
-                  <Button type="primary" onClick={handleSharing}>
-                    <FormattedMessage id="分享" />
-                  </Button>
-                </Button.Group>
-              </Affix>
+          {mode === 'edit' && config && (
+            <div className="page-container">
+              <div className="page-left">
+                <Resume
+                  value={config}
+                  theme={theme}
+                  template={query.template || 'template1'}
+                />
+              </div>
+              <div className="page-right">
+                <Drawer
+                  value={config}
+                  onValueChange={onConfigChange}
+                  theme={theme}
+                  onThemeChange={onThemeChange}
+                  template={query.template || 'template1'}
+                  onTemplateChange={updateTemplate}
+                  copyConfig={copyConfig}
+                  exportConfig={exportConfig}
+                  importConfig={importConfig}
+                  handleSharing={handleSharing}
+                />
+              </div>
               <div
                 className="box-size-info"
                 style={{
@@ -291,7 +276,14 @@ export const Page: React.FC = () => {
               >
                 ({box.width}, {box.height})
               </div>
-            </React.Fragment>
+            </div>
+          )}
+          {mode !== 'edit' && config && (
+            <Resume
+              value={config}
+              theme={theme}
+              template={query.template || 'template1'}
+            />
           )}
         </div>
       </Spin>

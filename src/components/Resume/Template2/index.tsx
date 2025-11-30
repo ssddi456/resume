@@ -344,15 +344,15 @@ export const Template2: React.FC<Props> = props => {
                       )}
                     </div>
                     <div className="section-detail">
-                      <span>
+                      <b>
                         <FormattedMessage id="项目描述" />：
-                      </span>
+                      </b>
                       <span>{project.project_desc}</span>
                     </div>
                     <div className="section-detail">
-                      <span>
+                      <b>
                         <FormattedMessage id="主要工作" />：
-                      </span>
+                      </b>
                       <span className="project-content">
                         {project.project_content}
                       </span>
