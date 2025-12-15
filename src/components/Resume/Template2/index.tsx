@@ -339,6 +339,7 @@ export const Template2: React.FC<Props> = props => {
                           {project.project_time}
                         </span>
                       </b>
+                      <br />
                       {project.project_role && (
                         <Tag color={theme.tagColor}>{project.project_role}</Tag>
                       )}
@@ -353,6 +354,7 @@ export const Template2: React.FC<Props> = props => {
                       <b>
                         <FormattedMessage id="主要工作" />：
                       </b>
+                      <br />
                       <span className="project-content">
                         {project.project_content}
                       </span>

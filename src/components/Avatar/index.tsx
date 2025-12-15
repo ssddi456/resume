@@ -19,7 +19,7 @@ export const Avatar = ({
           size={size as any}
         />
       ) : (
-        <span className="avatar-upload-tip">头像地址为空</span>
+        <span className="avatar-upload-tip"></span>
       )}
     </div>
   );
