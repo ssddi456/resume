@@ -10,6 +10,7 @@ import {
   EnvironmentFilled,
   HeartFilled,
   CrownFilled,
+  WechatFilled,
 } from '@ant-design/icons';
 import cx from 'classnames';
 import _ from 'lodash-es';
@@ -84,6 +85,12 @@ export const Template2: React.FC<Props> = props => {
                 <div className="mobile">
                   <PhoneFilled style={{ color: theme.color, opacity: 0.85 }} />
                   {profile.mobile}
+                </div>
+              )}
+              {profile?.wx && (
+                <div className="email">
+                  <WechatFilled style={{ color: theme.color, opacity: 0.85 }} />
+                  {profile.wx}
                 </div>
               )}
               {profile?.email && (
